@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-4">
+    <h2>Transport List</h2>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Transport ID</th>
+          <th>Goods</th>
+          <th>Departure Date</th>
+          <th>Arrival Date</th>
+          <th>Assigned Driver</th>
+          <th>Transport Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for transport in transports %}
+          <tr>
+            <td>{{ transport.transport_id }}</td>
+            <td>{{ transport.goods }}</td>
+            <td>{{ transport.departure_date }}</td>
+            <td>{{ transport.arrival_date }}</td>
+            <td>{{ transport.assigned_driver }}</td>
+            <td>{{ transport.transport_type }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="{% url 'create_transport' %}" class="btn btn-primary">Add Transport</a>
+  </div>
+{% endblock %}

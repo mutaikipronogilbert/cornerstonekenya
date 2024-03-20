@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Document List</title>
+</head>
+<body>
+    <h1>Uploaded Documents</h1>
+    <ul>
+        {% for document in documents %}
+        <li>
+            {{ document.document_id }} 
+            -- {{ document.document_name }}-<a href="{% url 'update_document' document.document_id %}">Edit</a>
+            <form action="{% url 'delete_document' document.document_id %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this document?')">
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'upload_document' %}">Upload Document</a>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cornerstone Logistics - Update Document</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(45deg, #ffd700, #32cd32);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite;
+    }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .container {
+      width: 80%;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 20px;
+      justify-items: center;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    button {
+      margin: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    input[type="text"],
+    input[type="file"] {
+      width: 80%;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Update Document</h1>
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if document %}
+    {% if document %}
+      {% if document.name|slice:'-4:' == '.pdf' %}
+        <a href="#" target="_blank">View Document (PDF)</a>
+      {% elif document.name|slice:'-5:' == '.docx' %}
+        <!-- Handle other document formats -->
+        <a href="{{ document.url }}" target="_blank">View Document (DOCX)</a>
+      {% else %}
+        <a href="{{document.url }}" download>Download Document</a>
+      {% endif %}
+    {% endif %}
+    <hr>
+  {% endif %}
+  
+  <form action="{% url 'update_document' document_id=document_id %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="document_id" placeholder="Unique Code" value="{{ document_id }}">
+    <input type="text" name="document_name" placeholder="Document Name" value="{{ document_name }}">
+    Change:<input type="file" name="document">
+    
+  
+       
+  {% if document %}
+
+      <p>Uploaded Document: <a href="{% url 'serve_document' filename=document.name %}" download>Download Document</a>
+</p>
+    
+        {% if document.name|slice:'-4:' == '.pdf' %}
+            <!-- Preview PDF -->
+            <embed src="{{ document.url }}" type="application/pdf" width="600" height="400">
+            <a href="{{ document.url }}" download>Download PDF</a>
+    {% elif document.name|slice:'-5:' == '.docx' %}
+    <!-- Preview Word Document using Office Online Viewer -->
+    <iframe src='https://docs.google.com/viewer?url={{ document.url }}&embedded=true' width='600px' height='400px'></iframe>
+
+    <a href="{% url 'serve_document' filename=document.name %}" download>Download DOCX</a>
+
+        {% elif document.name|slice:'-4:' == '.jpg' or document.name|slice:'-5:' == '.jpeg' or document.name|slice:'-4:' == '.png' %}
+            <!-- Preview Image -->
+            <img src="{{ document.url }}" alt="Preview Image" style="max-width: 600px; max-height: 400px;">
+            <a href="{% url 'serve_document' filename=document.name %}"" download>Download Image</a>
+        {% else %}
+            <a href="{% url 'serve_document' filename=document.name %}" download>Download File</a>
+        {% endif %}
+    {% endif %}
+
+
+    <button type="submit">Update</button>
+  </form>
+
+  <hr>
+  
+  <a href="{% url 'delete_document' document_id=document_id %}">Delete Document</a>
+  <a href="{% url 'document_list' %}">Back to Documents List</a>
+</div>
+
+</body>
+</html>

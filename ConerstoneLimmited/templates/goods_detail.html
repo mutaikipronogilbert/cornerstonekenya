@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Goods Detail</h2>
+  <p>ID: {{ goods.goods_id }}</p>
+  <p>Description: {{ goods.description }}</p>
+  <p>Weight: {{ goods.weight }}</p>
+  <p>Dimensions: {{ goods.dimensions }}</p>
+
+  <a href="{% url 'edit_goods' goods.goods_id %}">Edit</a>
+  <form method="post" action="{% url 'delete_goods' goods.goods_id %}" style="display: inline;">
+    {% csrf_token %}
+    <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this goods item?')">
+  </form>
+  <a href="{% url 'goods_list' %}">Back to Goods List</a>
+{% endblock %}

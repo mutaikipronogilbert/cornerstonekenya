@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load bootstrap5 %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2>Delete Tax Payment</h2>
+    <p>Are you sure you want to delete the tax payment with ID {{ tax_payment.tax_id }}?</p>
+    <form method="post" action="{% url 'delete_tax_payment' tax_id=tax_payment.tax_id %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Delete</button>
+      <a href="{% url 'tax_payment_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+{% endblock %}

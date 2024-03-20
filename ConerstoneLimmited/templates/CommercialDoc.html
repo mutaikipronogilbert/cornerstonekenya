@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cornerstone Logistics - Commercial Documents</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(45deg, #ffd700, #32cd32);
+      background-size: 400% 400%;
+      animation: gradientAnimation 15s ease infinite;
+    }
+
+    @keyframes gradientAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .container {
+      width: 80%;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 20px;
+      justify-items: center;
+    }
+
+    input[type="text"],
+    input[type="file"],
+    button {
+      margin: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    input[type="text"],
+    input[type="file"] {
+      width: 80%;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- <h1>Cornerstone Logistics - Commercial Documents</h1>
+  <form action="#" method="post">
+    <input type="text" placeholder="Unique Code">
+    <input type="text" placeholder="Document Name (e.g., Packing List)">
+    <input type="file">
+    <button type="submit">Upload</button>
+    <div id="moreUploads"></div>
+    <button type="button" onclick="addUpload()">Add More</button>
+  </form>
+</div>
+
+<script>
+  function addUpload() {
+    const moreUploads = document.getElementById('moreUploads');
+    const newInput = document.createElement('input');
+    newInput.type = 'file';
+    moreUploads.appendChild(newInput);
+  }
+</script> -->
+  <h1>Cornerstone Logistics - Commercial Documents</h1>
+  <!-- Your existing HTML code -->
+
+  <!-- Display Django messages -->
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <!-- Your existing HTML code continues -->
+
+  <form action="{% url 'upload_document' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="document_id" placeholder="Unique Code">
+    <input type="text" name="document_name" placeholder="Document Name">
+    <input type="file" name="document">
+    <button type="submit">Upload</button>
+    <div id="moreUploads"></div>
+    <button type="button" onclick="addUpload()">Add More</button>
+  </form>
+
+  <script>
+    function addUpload() {
+      const moreUploads = document.getElementById('moreUploads');
+      const newInput = document.createElement('input');
+      newInput.type = 'file';
+      newInput.name = 'additional_files'; // Adjust the name if needed
+      moreUploads.appendChild(newInput);
+    }
+  </script>
+
+  <!-- Links for delete, update, and view operations -->
+  {% for document in documents %}
+    <div>
+      <p>Document ID: {{ document.document_id }}</p>
+      <p>Document Name: {{ document.document_name }}</p>
+      <a href="{% url 'get_document' document.document_id %}">View Document</a>
+      <a href="{% url 'update_document' document.document_id %}">Update Document</a>
+      <a href="{% url 'delete_document' document.document_id %}">Delete Document</a>
+    </div>
+  {% endfor %}
+
+</body>
+</html>
+

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Foreign Suppliers List{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Foreign Suppliers List</h2>
+
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>View</th>
+                
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for supplier in suppliers %}
+                <tr>
+                    <td>{{ supplier.id }}</td>
+                    <td>{{ supplier.name }}</td>
+                    <td>{{ supplier.email }}</td>
+                    <td>{{ supplier.contact_number }}</td>
+                    <td>
+                        <a href="{% url 'view_foreign_supplier' supplier.supplier_id %}" class="btn btn-info">View</a>
+                    </td>
+                    
+                    <td>
+                        <form method="post" action="{% url 'delete_foreign_supplier' supplier.supplier_id %}" style="display: inline-block;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this supplier?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'create_foreign_supplier' %}" class="btn btn-primary ">
+        Create New Supplier
+    </a>
+</div>
+{% endblock %}

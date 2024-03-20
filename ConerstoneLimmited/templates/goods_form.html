@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+{% block content %}
+<div class="container mt-5">
+  <h2>Create/Update Goods</h2>
+  <form method="post" action="{% if goods %}{% url 'edit_goods' goods.goods_id %}{% else %}{% url 'create_goods' %}{% endif %}">
+    {% csrf_token %}
+    {{ form|crispy}}
+    <input type="submit" value="{% if goods %}Update{% else %}Create{% endif %} Goods">
+  </form>
+
+  {% if goods %}
+    <a href="{% url 'delete_goods' goods.goods_id %}" onclick="return confirm('Are you sure you want to delete this goods item?')">Delete Goods</a>
+  {% endif %}
+
+  <a href="{% url 'goods_list' %}">Back to Goods List</a>
+</div>
+{% endblock %}

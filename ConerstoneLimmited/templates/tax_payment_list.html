@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load bootstrap5 %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2>Tax Payments</h2>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Tax ID</th>
+          <th>Goods</th>
+          <th>Amount</th>
+          <th>Date Paid</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for tax_payment in tax_payments %}
+          <tr>
+            <td>{{ tax_payment.tax_id }}</td>
+            <td>{{ tax_payment.goods }}</td>
+            <td>{{ tax_payment.amount }}</td>
+            <td>{{ tax_payment.date_paid }}</td>
+            <td>
+              <a href="{% url 'edit_tax_payment' tax_id=tax_payment.tax_id %}" class="btn btn-warning btn-sm">Edit</a>
+              <a href="{% url 'delete_tax_payment' tax_id=tax_payment.tax_id %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="{% url 'create_tax_payment' %}" class="btn btn-primary">Add Tax Payment</a>
+  </div>
+{% endblock %}

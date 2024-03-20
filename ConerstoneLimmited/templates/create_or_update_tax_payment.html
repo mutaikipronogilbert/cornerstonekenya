@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load bootstrap5 %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2>{% if tax_payment %}Edit{% else %}Create{% endif %} Tax Payment</h2>
+    <form method="post" action="{% if tax_payment %}{% url 'edit_tax_payment' tax_id=tax_payment.tax_id %}{% else %}{% url 'create_tax_payment' %}{% endif %}">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-primary">Save</button>
+      <a href="{% url 'tax_payment_list' %}" class="btn btn-secondary mt-1">Cancel</a>
+    </form>
+  </div>
+{% endblock %}

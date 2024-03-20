@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Foreign Supplier{% endblock %}
+
+{% block content %}
+    <h2>Delete Foreign Supplier</h2>
+
+    <p>Are you sure you want to delete {{ supplier.name }}?</p>
+
+    <form method="post" action="{% url 'delete_supplier' supplier.supplier_id %}">
+        {% csrf_token %}
+        <button type="submit">Yes, delete</button>
+    </form>
+
+    <a href="{% url 'supplier_list' %}">
+        <button>Cancel</button>
+    </a>
+{% endblock %}

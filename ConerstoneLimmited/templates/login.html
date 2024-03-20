@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="login-container">
+      <h2>Login</h2>
+      {% if messages %}
+        <div class="messages">
+          {% for message in messages %}
+            <div class="{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      <form method="post" action="{% url 'home' %}" class="login-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <div class="text-center mt-3">
+        <button type="submit" class="login-button">Login</button>
+        </div>
+      </form>
+
+      <div class="text-center mt-3">
+        Don't have an account?<a href="{% url 'signup' %}"> Sign up </a>
+        </div>
+    
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    body {
+      background-color: #f0f2f5;
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #1877f2; /* Facebook blue color */
+    }
+
+    .login-form {
+      margin-top: 20px;
+    }
+
+    .login-button {
+      background-color: #1877f2; /* Facebook blue color */
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .login-button:hover {
+      background-color: #1565c0; /* Darker shade for hover effect */
+    }
+
+    .messages {
+      margin-top: 10px;
+    }
+
+    .success {
+      color: #4caf50; /* Green color for success messages */
+    }
+
+    .error {
+      color: #f44336; /* Red color for error messages */
+    }
+
+    .warning {
+      color: #ff9800; /* Orange color for warning messages */
+    }
+  </style>
+{% endblock %}

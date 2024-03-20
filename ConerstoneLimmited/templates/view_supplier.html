@@ -1,0 +1,30 @@
+<!-- view_supplier.html -->
+{% extends 'base.html' %}
+
+{% block title %}Supplier Details{% endblock %}
+
+{% block content %}
+  <h2>Supplier Details</h2>
+
+  <div>
+    <p><strong>Name:</strong> {{ supplier.name }}</p>
+    <p><strong>Email:</strong> {{ supplier.email }}</p>
+    <p><strong>Age:</strong> {{ supplier.age }}</p>
+    <p><strong>Gender:</strong> {{ supplier.get_gender_display }}</p>
+    <p><strong>Contact Details:</strong> {{ supplier.contact_details }}</p>
+    <p><strong>Address:</strong> {{ supplier.address }}</p>
+    <p><strong>Street Address:</strong> {{ supplier.street_address }}</p>
+    <p><strong>City:</strong> {{ supplier.city }}</p>
+    <p><strong>State:</strong> {{ supplier.state }}</p>
+    <p><strong>Zip Code:</strong> {{ supplier.zip_code }}</p>
+    <p><strong>Contact Number:</strong> {{ supplier.contact_number }}</p>
+  </div>
+
+  <a href="{% url 'edit_delete_foreign_supplier' supplier.supplier_id %}" class="btn btn-info">Edit</a>
+  <form method="post" action="{% url 'delete_foreign_supplier' supplier.supplier_id %}" style="display: inline-block;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this supplier?')">Delete</button>
+  </form>
+
+  <a href="{% url 'supplier_list' %}" class="btn btn-secondary btn-info ">Back to Supplier List</a>
+{% endblock %}

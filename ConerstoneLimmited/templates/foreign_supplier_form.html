@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Foreign Supplier Form{% endblock %}
+
+{% block content %}
+    <h1>Foreign Supplier Form</h1>
+
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+
+    <hr>
+
+    <h2>Foreign Suppliers List</h2>
+
+    <ul>
+        {% for supplier in suppliers %}
+            <li>
+                {{ supplier.name }} - {{ supplier.email }} - {{ supplier.contact_number }}
+                <a href="{% url 'update_foreign_supplier' supplier.supplier_id %}">Edit</a>
+                <a href="{% url 'delete_foreign_supplier' supplier.supplier_id %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

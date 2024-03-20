@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Goods List{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2 class="text-center mb-4">Goods List</h2>
+  <div class="text-center mt-4">
+    <input type="text" id="searchInput" placeholder="Search goods">
+    <select id="filterBy">
+      <option value="all">Filter By</option>
+      <option value="goods_id">Goods ID</option>
+      <option value="name">Name</option>
+      <option value="supplier">Supplier</option>
+      <option value="description">Items</option>
+    </select>
+    <button onclick="searchGoods()" class="btn btn-primary">Search</button>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-bordered" id="goodsTable">
+      <thead>
+        <tr>
+          <th>Goods ID</th>
+          <th>Product</th>
+          <th>Supplier</th>
+          <th>Items</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for good in goods %}
+        <tr>
+          <td> <a href="{% url 'view_goods' goods_id=good.goods_id%}" >{{ good.goods_id }}</a></td>
+          <td>{{ good.name }}</td>
+          <td>{{ good.supplier }}</td>
+          <td>{{ good.quantity }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <a href="{% url 'create_goods' %}" class="btn btn-primary mt-4">Add New Goods</a>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,17 @@
+annotated-types==0.6.0
+asgiref==3.7.2
+beautifulsoup4==4.12.3
+crispy-bootstrap5
+Django==4.2.9
+django-bootstrap-datepicker-plus
+django-bootstrap-v5
+django-bootstrap5
+django-crispy-forms
+django-jazzmin
+numpy
+pydantic
+pydantic_core
+soupsieve==2.5
+sqlparse==0.4.4
+typing_extensions==4.9.0
+tzdata==2023.4

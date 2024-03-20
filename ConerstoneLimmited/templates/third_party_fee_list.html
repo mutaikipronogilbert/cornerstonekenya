@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load bootstrap5 %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Third Party Fees List</h2>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Goods</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for fee in third_party_fees_list %}
+        <tr>
+          <td>{{ fee.third_party_fee_id }}</td>
+          <td>{{ fee.goods }}</td>
+          <td>{{ fee.description }}</td>
+          <td>{{ fee.amount }}</td>
+          <td>
+            <a href="{% url 'edit_third_party_fee' third_party_fee_id=fee.third_party_fee_id %}" class="btn btn-primary btn-sm">Edit</a>
+            <a href="{% url 'delete_third_party_fee' third_party_fee_id=fee.third_party_fee_id %}" class="btn btn-danger btn-sm">Delete</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{% url 'create_third_party_fee' %}" class="btn btn-success">Add Third Party Fee</a>
+</div>
+{% endblock %}

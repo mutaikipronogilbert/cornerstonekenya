@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load bootstrap5 %}
+
+
+{% block title %}{% if supplier %}Edit{% else %}Create{% endif %} Foreign Supplier{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>{% if supplier %}Edit{% else %}Create{% endif %} Foreign Supplier</h2>
+
+    <form method="post" action="{% url 'create_foreign_supplier' %}">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="{% if supplier %}Update{% else %}Create{% endif %} Foreign Supplier">
+    </form>
+
+    {% if supplier %}
+        <a href="{% url 'delete_foreign_supplier' supplier.supplier_id %}" onclick="return confirm('Are you sure you want to delete this supplier?')">
+            <button type="submit" class="btn btn-danger" >Delete</button>
+        </a>
+    {% endif %}
+
+    <a href="{% url 'supplier_list' %}">
+        <button class="btn btn-info" >Back to Suppliers List</button>
+    </a>
+</div>
+{% endblock %}
